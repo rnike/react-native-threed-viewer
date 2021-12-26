@@ -1,4 +1,7 @@
 #import <React/RCTViewManager.h>
+#import <SceneKit/SceneKit.h>
+
+@import SceneKit.ModelIO;
 
 @interface ThreedViewerViewManager : RCTViewManager
 @end
@@ -7,28 +10,62 @@
 
 RCT_EXPORT_MODULE(ThreedViewerView)
 
-- (UIView *)view
+- (SCNView *)view
 {
-  return [[UIView alloc] init];
+    SCNView *view = [[SCNView alloc] init];
+    
+    view.scene = [[SCNScene alloc] init];
+    
+    return view;
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(color, NSString, UIView)
-{
-  [view setBackgroundColor:[self hexStringToColor:json]];
+RCT_CUSTOM_VIEW_PROPERTY(allowsCameraControl, NSBoolean, SCNView){
+    view.allowsCameraControl = json;
 }
 
-- hexStringToColor:(NSString *)stringToConvert
+RCT_CUSTOM_VIEW_PROPERTY(src, NSString, SCNView)
 {
-  NSString *noHashString = [stringToConvert stringByReplacingOccurrencesOfString:@"#" withString:@""];
-  NSScanner *stringScanner = [NSScanner scannerWithString:noHashString];
+    for (SCNNode *child in view.scene.rootNode.childNodes) {
+        [child removeFromParentNode];
+    }
+    
+    [view.scene.rootNode addChildNode:  [self createModel:json[@"model"]
+                                               textureUrl:json[@"texture"]]];
+}
 
-  unsigned hex;
-  if (![stringScanner scanHexInt:&hex]) return nil;
-  int r = (hex >> 16) & 0xFF;
-  int g = (hex >> 8) & 0xFF;
-  int b = (hex) & 0xFF;
+-(SCNNode *)createModel:(nullable NSString*)modelUrl textureUrl:(nullable NSString*)textureUrl  {
+    NSString *fileType = [modelUrl pathExtension];
+    
+    if([fileType isEqual: @"obj"]) {
+        return [self createObj:modelUrl textureUrl:textureUrl];
+    }
+    
+    return nil;
+}
 
-  return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
+-(SCNNode *)createObj:(NSString *)modelUrl textureUrl:(NSString *)textureUrl {
+    MDLAsset *asset = [[MDLAsset alloc] initWithURL:[NSURL URLWithString:modelUrl]];
+    
+    if (asset.count == 0) {
+        return nil;
+    }
+    
+    MDLMesh* object = (MDLMesh *)[asset objectAtIndex:0];
+    SCNNode *node = [SCNNode nodeWithMDLObject:object];
+    
+    if (textureUrl) {
+        NSData *textureData = [[NSFileManager defaultManager] contentsAtPath:textureUrl];
+        SCNMaterial *material = [SCNMaterial new];
+        
+        [material setDoubleSided:NO];
+        material.locksAmbientWithDiffuse = YES;
+        material.diffuse.contents = [UIImage imageWithData:textureData];
+        material.ambient.contents = [UIColor whiteColor];
+        
+        node.geometry.materials = [NSArray arrayWithObject:material];
+    }
+    
+    return node;
 }
 
 @end

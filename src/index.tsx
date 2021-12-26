@@ -1,26 +1,72 @@
-import {
-  requireNativeComponent,
-  UIManager,
-  Platform,
-  ViewStyle,
-} from 'react-native';
+import React, { useEffect, useState, useMemo } from 'react';
 
-const LINKING_ERROR =
-  `The package 'react-native-threed-viewer' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
+import { Image } from 'react-native';
+import { downloadFile } from 'react-native-fs';
+import NativeComponent, { Props } from './NativeComponent';
+import { getFilename, makeFilePath } from './utils/urlParser';
 
-type ThreedViewerProps = {
-  color: string;
-  style: ViewStyle;
+const useObjSrc = ({ src }: Pick<Props, 'src'>) => {
+  const { texture, model } = src;
+
+  const [modelUrl, setModelUrl] = useState<string>();
+  const [textureUrl, setTextureUrl] = useState<string>();
+
+  useEffect(() => {
+    if (!model) {
+      setModelUrl(undefined);
+      return;
+    }
+
+    const fromUrl = Image.resolveAssetSource(model).uri;
+    const fileName = getFilename(fromUrl);
+    const filePath = makeFilePath(fileName);
+
+    downloadFile({
+      fromUrl,
+      toFile: filePath,
+      cacheable: true,
+    })
+      .promise.then(() => {
+        setModelUrl(filePath);
+      })
+      .catch((e) => {
+        console.error('error on loading model', e);
+      });
+  }, [model]);
+
+  useEffect(() => {
+    if (!texture) {
+      setTextureUrl(undefined);
+      return;
+    }
+    const fromUrl = Image.resolveAssetSource(texture).uri;
+    const fileName = getFilename(fromUrl);
+    const filePath = makeFilePath(fileName);
+
+    downloadFile({
+      fromUrl,
+      toFile: filePath,
+    })
+      .promise.then(() => {
+        setTextureUrl(filePath);
+      })
+      .catch((e) => {
+        console.error('error on loading texture', e);
+      });
+  }, [texture]);
+
+  return useMemo(
+    () => ({
+      model: modelUrl,
+      texture: textureUrl,
+    }),
+    [modelUrl, textureUrl]
+  );
 };
 
-const ComponentName = 'ThreedViewerView';
+export default (props: Props) => {
+  const { src, ...others } = props;
+  const configSrc = useObjSrc({ src });
 
-export const ThreedViewerView =
-  UIManager.getViewManagerConfig(ComponentName) != null
-    ? requireNativeComponent<ThreedViewerProps>(ComponentName)
-    : () => {
-        throw new Error(LINKING_ERROR);
-      };
+  return <NativeComponent src={configSrc} {...others} />;
+};
