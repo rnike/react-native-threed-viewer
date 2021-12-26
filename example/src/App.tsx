@@ -5,7 +5,7 @@ import ThreedViewer from 'react-native-threed-viewer';
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         <ThreedViewer
           src={{
@@ -37,6 +37,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     marginTop: 20,
     alignItems: 'center',

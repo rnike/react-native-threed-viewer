@@ -2,7 +2,7 @@ const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 const escape = require('escape-string-regexp');
 const pak = require('../package.json');
-const { getDefaultConfig } = require("metro-config");
+const { getDefaultConfig } = require('metro-config');
 
 const root = path.resolve(__dirname, '..');
 
