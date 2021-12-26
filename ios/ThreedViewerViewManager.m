@@ -29,8 +29,14 @@ RCT_CUSTOM_VIEW_PROPERTY(src, NSString, SCNView)
         [child removeFromParentNode];
     }
     
-    [view.scene.rootNode addChildNode:  [self createModel:json[@"model"]
-                                               textureUrl:json[@"texture"]]];
+    view.scene = [[SCNScene alloc] init];
+    
+    SCNNode *model = [self createModel:json[@"model"]
+                            textureUrl:json[@"texture"]];
+    
+    if(model != nil){
+        [view.scene.rootNode addChildNode: model];
+    }
 }
 
 -(SCNNode *)createModel:(nullable NSString*)modelUrl textureUrl:(nullable NSString*)textureUrl  {
