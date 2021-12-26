@@ -1,22 +1,18 @@
+🚧 WORK IN PROGRESS 🚧 
+
 # react-native-threed-viewer
 
 3D viewer for react-native
 
-## Installation
+## Try
 
 ```sh
-npm install react-native-threed-viewer
+yarn && cd example && yarn ios
 ```
 
 ## Usage
 
-```js
-import { ThreedViewerView } from "react-native-threed-viewer";
-
-// ...
-
-<ThreedViewerView color="tomato" />
-```
+TODO
 
 ## Contributing
 
