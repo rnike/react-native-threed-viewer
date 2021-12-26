@@ -1,9 +1,18 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-import { Image } from 'react-native';
+import { Image, ViewStyle, ImageRequireSource } from 'react-native';
 import { downloadFile } from 'react-native-fs';
-import NativeComponent, { Props } from './NativeComponent';
+import NativeComponent from './NativeComponent';
 import { getFilename, makeFilePath } from './utils/urlParser';
+
+export type Props = {
+  src: {
+    model?: ImageRequireSource;
+    texture?: ImageRequireSource;
+  };
+  style: ViewStyle;
+  allowsCameraControl?: boolean;
+};
 
 const useObjSrc = ({ src }: Pick<Props, 'src'>) => {
   const { texture, model } = src;
