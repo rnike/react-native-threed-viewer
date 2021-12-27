@@ -20,4 +20,8 @@ RCT_EXPORT_VIEW_PROPERTY(allowsCameraControl, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(src, NSDictionary)
 
+RCT_EXPORT_VIEW_PROPERTY(rotation, NSDictionary)
+
+RCT_EXPORT_VIEW_PROPERTY(scale, NSDictionary)
+
 @end

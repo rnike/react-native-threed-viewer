@@ -11,6 +11,8 @@
 
 @interface ThreedViewer()
 
+@property (nonatomic, assign) SCNMatrix4 rotationMatrix;
+@property (nonatomic, assign) SCNMatrix4 scaleMatrix;
 @property (nonatomic, strong) SCNNode* modelNode;
 
 @end
@@ -19,6 +21,8 @@
 
 - (id) init {
     self = [super init];
+    _rotationMatrix = SCNMatrix4Identity;
+    _scaleMatrix = SCNMatrix4MakeScale(1,1,1);
     
     return self;
 }
@@ -26,6 +30,35 @@
 - (void)setSrc:(NSDictionary *)src{
     _modelNode = [self createModel:src[@"model"]
                         textureUrl:src[@"texture"]];;
+    [self reloadModel];
+}
+
+- (void)setRotation:(nullable NSDictionary *)value{
+    if(value){
+        CGFloat x = [value[@"x"] floatValue] ?: 0;
+        CGFloat y = [value[@"y"] floatValue] ?: -0;
+        CGFloat z = [value[@"z"] floatValue] ?: 0;
+        CGFloat a = [value[@"a"] floatValue] ?: 0;
+        
+        _rotationMatrix = SCNMatrix4MakeRotation(a, x, y, z);
+    }else{
+        _rotationMatrix = SCNMatrix4Identity;
+    }
+    
+    [self reloadModel];
+}
+
+- (void)setScale:(nullable NSDictionary *)value{
+    if(value){
+        CGFloat x = [value[@"x"] floatValue] ?: 1;
+        CGFloat y = [value[@"y"] floatValue] ?: 1;
+        CGFloat z = [value[@"z"] floatValue] ?: 1;
+        
+        _scaleMatrix = SCNMatrix4MakeScale(x, y, z);
+    }else{
+        _scaleMatrix = SCNMatrix4MakeScale(1,1,1);
+    }
+    
     [self reloadModel];
 }
 
@@ -39,7 +72,12 @@
     if(!_modelNode){
         return;
     }
-
+    
+    SCNMatrix4 applyRotation = SCNMatrix4Mult(SCNMatrix4Identity, _rotationMatrix);
+    SCNMatrix4 applyScale = SCNMatrix4Mult(applyRotation, _scaleMatrix);
+    
+    [_modelNode setTransform:applyScale];
+    
     [self.scene.rootNode addChildNode: _modelNode];
 }
 

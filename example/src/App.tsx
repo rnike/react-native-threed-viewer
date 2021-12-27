@@ -29,6 +29,13 @@ export default function App() {
             texture: require('./assets/fox.jpg'),
           }}
           style={styles.modalViewer}
+          scale={{ x: 2 }}
+          rotation={{
+            x: -1,
+            y: 0,
+            z: 0,
+            a: Math.PI / 2,
+          }}
           allowsCameraControl
         />
       </ScrollView>

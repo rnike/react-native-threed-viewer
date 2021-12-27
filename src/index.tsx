@@ -12,6 +12,8 @@ export type Props = {
   };
   style: ViewStyle;
   allowsCameraControl?: boolean;
+  rotation?: Partial<{ x: number; y: number; z: number; a: number }>;
+  scale?: Partial<{ x: number; y: number; z: number }>;
 };
 
 const useObjSrc = ({ src }: Pick<Props, 'src'>) => {
