@@ -1,5 +1,6 @@
 #import <React/RCTViewManager.h>
 #import <SceneKit/SceneKit.h>
+#import "ThreedViewer.h"
 
 @import SceneKit.ModelIO;
 
@@ -10,68 +11,13 @@
 
 RCT_EXPORT_MODULE(ThreedViewerView)
 
-- (SCNView *)view
+- (ThreedViewer *)view
 {
-    SCNView *view = [[SCNView alloc] init];
-    
-    view.scene = [[SCNScene alloc] init];
-    
-    return view;
+    return [[ThreedViewer alloc] init];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(allowsCameraControl, NSBoolean, SCNView){
-    view.allowsCameraControl = json;
-}
+RCT_EXPORT_VIEW_PROPERTY(allowsCameraControl, BOOL)
 
-RCT_CUSTOM_VIEW_PROPERTY(src, NSString, SCNView)
-{
-    for (SCNNode *child in view.scene.rootNode.childNodes) {
-        [child removeFromParentNode];
-    }
-    
-    view.scene = [[SCNScene alloc] init];
-    
-    SCNNode *model = [self createModel:json[@"model"]
-                            textureUrl:json[@"texture"]];
-    
-    if(model != nil){
-        [view.scene.rootNode addChildNode: model];
-    }
-}
-
--(SCNNode *)createModel:(nullable NSString*)modelUrl textureUrl:(nullable NSString*)textureUrl  {
-    NSString *fileType = [modelUrl pathExtension];
-    
-    if([fileType isEqual: @"obj"]) {
-        return [self createObj:modelUrl textureUrl:textureUrl];
-    }
-    
-    return nil;
-}
-
--(SCNNode *)createObj:(NSString *)modelUrl textureUrl:(NSString *)textureUrl {
-    MDLAsset *asset = [[MDLAsset alloc] initWithURL:[NSURL URLWithString:modelUrl]];
-    
-    if (asset.count == 0) {
-        return nil;
-    }
-    
-    MDLMesh* object = (MDLMesh *)[asset objectAtIndex:0];
-    SCNNode *node = [SCNNode nodeWithMDLObject:object];
-    
-    if (textureUrl) {
-        NSData *textureData = [[NSFileManager defaultManager] contentsAtPath:textureUrl];
-        SCNMaterial *material = [SCNMaterial new];
-        
-        [material setDoubleSided:NO];
-        material.locksAmbientWithDiffuse = YES;
-        material.diffuse.contents = [UIImage imageWithData:textureData];
-        material.ambient.contents = [UIColor whiteColor];
-        
-        node.geometry.materials = [NSArray arrayWithObject:material];
-    }
-    
-    return node;
-}
+RCT_EXPORT_VIEW_PROPERTY(src, NSDictionary)
 
 @end
