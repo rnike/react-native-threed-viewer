@@ -20,6 +20,26 @@ export default function App() {
             model: require('./assets/cat.obj'),
             texture: require('./assets/cat.jpg'),
           }}
+          rotation={[
+            {
+              x: 1,
+              y: 0,
+              z: 0,
+              a: -Math.PI / 2,
+            },
+            {
+              x: 0,
+              y: -1,
+              z: 0,
+              a: (-Math.PI * 2) / 3,
+            },
+            {
+              x: 0,
+              y: 1,
+              z: 0,
+              a: -Math.PI / 2,
+            },
+          ]}
           style={styles.modalViewer}
           allowsCameraControl
         />
@@ -29,12 +49,12 @@ export default function App() {
             texture: require('./assets/fox.jpg'),
           }}
           style={styles.modalViewer}
-          scale={{ x: 2 }}
+          scale={{ x: 3 }}
           rotation={{
-            x: -1,
+            x: 1,
             y: 0,
             z: 0,
-            a: Math.PI / 2,
+            a: -Math.PI / 2,
           }}
           allowsCameraControl
         />

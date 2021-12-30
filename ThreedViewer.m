@@ -12,7 +12,7 @@
 
 @interface ThreedViewer()
 
-@property (nonatomic, strong, nullable) NSDictionary* rotationData;
+@property (nonatomic, strong, nullable) NSMutableArray<NSDictionary*>* rotationData;
 @property (nonatomic, strong, nullable) NSDictionary* scaleData;
 @property (nonatomic, strong, nullable) SCNNode* modelNode;
 
@@ -32,7 +32,7 @@
     [self reloadModel];
 }
 
-- (void)setRotation:(nullable NSDictionary *)value{
+- (void)setRotation:(nullable NSMutableArray<NSDictionary*> *)value{
     _rotationData = value;
     
     [self reloadModel];

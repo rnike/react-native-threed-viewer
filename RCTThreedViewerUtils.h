@@ -21,6 +21,6 @@
 
 - (SCNNode *)createObj:(NSString *)modelUrl textureUrl:(NSString *)textureUrl;
 
-- (SCNMatrix4)createTransform:(nullable NSDictionary*)scaleData rotationData:(nullable NSDictionary*)rotationData;
+- (SCNMatrix4)createTransform:(nullable NSDictionary*)scaleData rotationData:(nullable NSMutableArray<NSDictionary*>*)rotationData;
 
 @end

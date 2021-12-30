@@ -5,6 +5,8 @@ import { downloadFile } from 'react-native-fs';
 import NativeComponent from './NativeComponent';
 import { getFilename, makeFilePath } from './utils/urlParser';
 
+type Rotation = Partial<{ x: number; y: number; z: number; a: number }>;
+
 export type Props = {
   src: {
     model?: ImageRequireSource;
@@ -12,7 +14,7 @@ export type Props = {
   };
   style: ViewStyle;
   allowsCameraControl?: boolean;
-  rotation?: Partial<{ x: number; y: number; z: number; a: number }>;
+  rotation?: Rotation | Rotation[];
   scale?: Partial<{ x: number; y: number; z: number }>;
 };
 
@@ -76,8 +78,20 @@ const useObjSrc = ({ src }: Pick<Props, 'src'>) => {
 };
 
 export default (props: Props) => {
-  const { src, ...others } = props;
+  const { src, rotation, ...others } = props;
   const configSrc = useObjSrc({ src });
 
-  return <NativeComponent src={configSrc} {...others} />;
+  let rotationArray;
+
+  if (!Array.isArray(rotation)) {
+    if (rotation) {
+      rotationArray = [rotation];
+    }
+  } else {
+    rotationArray = rotation;
+  }
+
+  return (
+    <NativeComponent src={configSrc} rotation={rotationArray} {...others} />
+  );
 };

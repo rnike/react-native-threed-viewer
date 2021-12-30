@@ -95,11 +95,14 @@
 }
 
 - (SCNMatrix4)createTransform:(nullable NSDictionary*)scaleData
-                 rotationData:(nullable NSDictionary*)rotationData {
+                 rotationData:(nullable NSMutableArray<NSDictionary*>*)rotationData {
     SCNMatrix4 result = SCNMatrix4Identity;
     
     result = SCNMatrix4Mult(result, [self parseScale:scaleData]);
-    result = SCNMatrix4Mult(result, [self parseRotation:rotationData]);
+    
+    for (NSDictionary *data in rotationData) {
+        result = SCNMatrix4Mult(result, [self parseRotation:data]);
+    }
     
     return result;
 }

@@ -9,8 +9,8 @@
 
 @interface ThreedViewer : SCNView
 
-@property (nonatomic, strong) NSDictionary *src;
-@property (nonatomic, strong) NSDictionary *rotation;
-@property (nonatomic, strong) NSDictionary *scale;
+@property (nonatomic, strong, nullable) NSDictionary *src;
+@property (nonatomic, strong, nullable) NSMutableArray<NSDictionary*> *rotation;
+@property (nonatomic, strong, nullable) NSDictionary *scale;
 
 @end
