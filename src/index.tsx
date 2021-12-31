@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 
-import { Image, ViewStyle, ImageRequireSource } from 'react-native';
+import { Image, ViewStyle, StyleProp, ImageRequireSource } from 'react-native';
 import { downloadFile } from 'react-native-fs';
 import NativeComponent from './NativeComponent';
 import { getFilename, makeFilePath } from './utils/urlParser';
@@ -12,7 +12,7 @@ export type Props = {
     model?: ImageRequireSource;
     texture?: ImageRequireSource;
   };
-  style: ViewStyle;
+  style: StyleProp<ViewStyle>;
   allowsCameraControl?: boolean;
   rotation?: Rotation | Rotation[];
   scale?: Partial<{ x: number; y: number; z: number }>;
