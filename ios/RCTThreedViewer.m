@@ -2,15 +2,15 @@
 //  ThreedViewer.m
 //  react-native-threed-viewer
 //
-//  Created by Jake on 2021/12/27.
+//  Created by Mike on 2021/12/27.
 //
 
-#import "ThreedViewer.h"
+#import "RCTThreedViewer.h"
 #import "RCTThreedViewerUtils.h"
 
 @import SceneKit.ModelIO;
 
-@interface ThreedViewer()
+@interface RCTThreedViewer()
 
 @property (nonatomic, strong, nullable) NSMutableArray<NSDictionary*>* rotationData;
 @property (nonatomic, strong, nullable) NSDictionary* scaleData;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation ThreedViewer
+@implementation RCTThreedViewer
 
 - (id) init {
     self = [super init];
@@ -44,7 +44,7 @@
     [self reloadModel];
 }
 
--(void) reloadModel{
+- (void) reloadModel{
     for (SCNNode *child in self.scene.rootNode.childNodes) {
         [child removeFromParentNode];
     }

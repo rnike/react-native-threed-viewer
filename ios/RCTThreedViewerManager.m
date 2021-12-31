@@ -1,19 +1,19 @@
 #import <React/RCTViewManager.h>
 #import <SceneKit/SceneKit.h>
-#import "ThreedViewer.h"
+#import "RCTThreedViewer.h"
 
 @import SceneKit.ModelIO;
 
-@interface ThreedViewerViewManager : RCTViewManager
+@interface RCTThreedViewerManager : RCTViewManager
 @end
 
-@implementation ThreedViewerViewManager
+@implementation RCTThreedViewerManager
 
 RCT_EXPORT_MODULE(ThreedViewerView)
 
-- (ThreedViewer *)view
+- (RCTThreedViewer *)view
 {
-    return [[ThreedViewer alloc] init];
+    return [[RCTThreedViewer alloc] init];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(allowsCameraControl, BOOL)

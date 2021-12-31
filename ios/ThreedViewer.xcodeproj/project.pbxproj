@@ -6,12 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-
-		5E555C0D2413F4C50049A1A2 /* ThreedViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* ThreedViewer.m */; };
-
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -26,10 +20,11 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libThreedViewer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libThreedViewer.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
-		B3E7B5881CC2AC0600A0062D /* ThreedViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreedViewer.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* ThreedViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreedViewer.m; sourceTree = "<group>"; };
-
+		B3E7B5881CC2AC0600A0062D /* RCTThreedViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTThreedViewer.h; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* RCTThreedViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTThreedViewer.m; sourceTree = "<group>"; };
+		F10EF7E5277F5F1400B99A61 /* RCTThreedViewerUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTThreedViewerUtils.m; sourceTree = "<group>"; };
+		F10EF7E6277F5F1500B99A61 /* RCTThreedViewerUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTThreedViewerUtils.h; sourceTree = "<group>"; };
+		F10EF7E7277F5F2000B99A61 /* RCTThreedViewerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTThreedViewerManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,10 +49,11 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
-				B3E7B5881CC2AC0600A0062D /* ThreedViewer.h */,
-				B3E7B5891CC2AC0600A0062D /* ThreedViewer.m */,
-
+				F10EF7E6277F5F1500B99A61 /* RCTThreedViewerUtils.h */,
+				F10EF7E5277F5F1400B99A61 /* RCTThreedViewerUtils.m */,
+				F10EF7E7277F5F2000B99A61 /* RCTThreedViewerManager.m */,
+				B3E7B5881CC2AC0600A0062D /* RCTThreedViewer.h */,
+				B3E7B5891CC2AC0600A0062D /* RCTThreedViewer.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,9 +115,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				B3E7B58A1CC2AC0600A0062D /* ThreedViewer.m in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +227,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThreedViewer;
 				SKIP_INSTALL = YES;
-
 			};
 			name = Debug;
 		};
@@ -251,7 +243,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ThreedViewer;
 				SKIP_INSTALL = YES;
-
 			};
 			name = Release;
 		};

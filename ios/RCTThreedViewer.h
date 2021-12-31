@@ -2,12 +2,11 @@
 //  ThreedViewer.h
 //  Pods
 //
-//  Created by Jake on 2021/12/27.
+//  Created by Mike on 2021/12/27.
 //
-#import <React/RCTViewManager.h>
 #import <SceneKit/SceneKit.h>
 
-@interface ThreedViewer : SCNView
+@interface RCTThreedViewer : SCNView
 
 @property (nonatomic, strong, nullable) NSDictionary *src;
 @property (nonatomic, strong, nullable) NSMutableArray<NSDictionary*> *rotation;
